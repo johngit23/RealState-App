@@ -1,5 +1,4 @@
 import prisma from "../lib/prisma.js";
-import jwt from "jsonwebtoken";
 
 export const addPost = async (req, res) => {
   const body = req.body;
