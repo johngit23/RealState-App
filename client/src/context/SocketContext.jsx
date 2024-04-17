@@ -4,7 +4,7 @@ import { AuthContext } from "./AuthContext";
 
 export const SocketContext = createContext();
 
-export const SocketContextProvider = ({ children }) => {
+export const SocketProvider = ({ children }) => {
   const { currentUser } = useContext(AuthContext);
   const [socket, setSocket] = useState(null);
 

@@ -1,8 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import "./chat.scss";
 import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 import { format } from "timeago.js";
 import { SocketContext } from "../../context/SocketContext";
+import { useNotificationStore } from "../../lib/notificationStore";
 
 function Chat({ chats }) {
   const [chat, setChat] = useState(null);
@@ -10,6 +12,8 @@ function Chat({ chats }) {
   const { socket } = useContext(SocketContext);
 
   const messageEndRef = useRef();
+
+  const decrease = useNotificationStore((state) => state.decrease);
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -95,7 +99,7 @@ function Chat({ chats }) {
         <div className="chatBox">
           <div className="top">
             <div className="user">
-              <img src={chat.receiver.avatar || "/noavatar.jpg"} alt="" />
+              <img src={chat.receiver.avatar || "noavatar.jpg"} alt="" />
               {chat.receiver.username}
             </div>
             <span className="close" onClick={() => setChat(null)}>
@@ -105,8 +109,7 @@ function Chat({ chats }) {
           <div className="center">
             {chat.messages.map((message) => (
               <div
-                className="chatMessage own"
-                key={message.id}
+                className="chatMessage"
                 style={{
                   alignSelf:
                     message.userId === currentUser.id
@@ -115,6 +118,7 @@ function Chat({ chats }) {
                   textAlign:
                     message.userId === currentUser.id ? "right" : "left",
                 }}
+                key={message.id}
               >
                 <p>{message.text}</p>
                 <span>{format(message.createdAt)}</span>

@@ -29,7 +29,9 @@ function ProfilePage() {
         <div className="wrapper">
           <div className="title">
             <h1>User Information</h1>
-            <button>Update Profile</button>
+            <button>
+              <Link to="/profile/update">Update Profile</Link>
+            </button>
           </div>
           <div className="info">
             <span>
